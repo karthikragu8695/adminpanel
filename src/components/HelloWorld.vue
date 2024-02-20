@@ -1,59 +1,90 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div  class="flex h-screen bg-indigo-700">
+  <div class="w-full max-w-xs m-auto bg-indigo-100 rounded p-5">   
+      <header>
+        <img class="w-14 mx-auto mb-3" src="https://img.icons8.com/fluent/344/year-of-tiger.png" />
+      </header>   
+      <form @submit.prevent="handleLogin">
+      
+        <div>
+          <label class="block mb-2 text-indigo-500" for="Email">Email</label>
+          <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border rounded outline-none focus:bg-gray-300"  v-model="email"  type="Email" name="Email">
+        </div>
+        <div>
+          <label class="block mb-2 text-indigo-500" for="password">Password</label>
+          <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border rounded outline-none focus:bg-gray-300" v-model="password" type="password" name="password">
+        </div>
+        <div class="flex">          
+          <v-btn class="w-72 bg-green   mx-auto"
+            size="large" type="submit"  :value="loading ? 'Loading' : 'Send magic link'" :disabled="loading">Sign In
+          </v-btn>
+        </div>       
+      </form>  
+      <footer class="mt-2 flex">
+        <a class="text-indigo-700 mx-auto hover:text-pink-700 text-sm float-left" href="#">Forgot Password?</a>
+        <a @click="dialog=true"  class="text-indigo-700  mx-auto hover:text-pink-700 ml-14 text-sm float-left" >sign up</a>
+      </footer>   
+    </div>
+</div>
+<v-dialog fullscreen v-model="dialog">
+  <div class="flex h-screen bg-indigo-700">
+<div class="w-full max-w-xs m-auto bg-indigo-100 rounded p-5">   
+    <header>
+      <img class="w-14 mx-auto mb-3" src="https://img.icons8.com/fluent/344/year-of-tiger.png" />
+    </header>   
+    <form>
+      <div>
+        <label class="block mb-2 text-indigo-500" for="username">Username</label>
+        <input class="w-full p-2 mb-6 text-indigo-700 border-black rounded border focus:bg-gray-300" type="text" name="username">
+      </div>
+      <div>
+        <label class="block mb-2 text-indigo-500" for="password">Email</label>
+        <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border rounded outline-none focus:bg-gray-300" type="Email" name="Email">
+      </div>
+      <div>
+        <label class="block mb-2 text-indigo-500" for="password">Password</label>
+        <input class="w-full p-2 mb-6 text-indigo-700 border-b-2 border rounded outline-none focus:bg-gray-300" type="password" name="password">
+      </div>
+      <div class="flex">          
+        <v-btn class=" mx-auto w-72 bg-green">
+        Sign up
+      </v-btn>
+      </div>       
+    </form>  
+    <footer class="mt-2 flex" >
+      <a class="text-indigo-700 mx-auto hover:text-pink-700 text-sm float-left" href="#">Already account used </a>
+      <a @click="dialog=false" class="text-indigo-700 mx-auto hover:text-pink-700 text-sm float-left">sign in</a>
+    </footer>   
   </div>
+</div>
+</v-dialog>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+<script setup>
+import { ref } from 'vue'
+import { supabase } from '../supabase'
+const email = ref('')
+const password = ref('')
+const dialog = ref(false)
+const loading = ref(false)
+
+const handleLogin = async () => {
+  try {
+    loading.value = true
+    const { data,error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    })
+    console.log(data)
+    if (data.user )  {
+      console.log(data);
+      }else{
+      loading.value=false
+      console.log(error)
+    }
+  } finally {
+    loading.value = false
   }
 }
-</script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+</script>
