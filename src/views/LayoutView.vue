@@ -9,15 +9,15 @@
                   <v-icon >mdi-home</v-icon>
                   <span to="/"> Home</span>
               </v-btn> -->
-              <v-btn value="recent" to="/"  class=" text-pink active px-5 hover:text-pink-500">
+              <!-- <v-btn value="recent" to="/"  class=" text-pink active px-5 hover:text-pink-500">
                   <v-icon>mdi-home</v-icon>
                   <span to="/">Home</span>
               </v-btn>
-              <v-btn value="recent" to="/Details"  class="px-5 hover:text-pink-500">
+              <v-btn value="recent"  to="/profile" class="px-5 hover:text-pink-500">
                   <v-icon>mdi-account</v-icon>
-                  <span >Matches</span>
+                  <span >Add Profile</span>
               </v-btn>
-              <v-btn value="recent"  to="/profile" class="px-5  hover:text-pink-500 ">
+              <v-btn value="recent"  class="px-5  hover:text-pink-500 ">
                   <v-icon>mdi-mail</v-icon>
                   <span >Mailbox</span>
               </v-btn>
@@ -28,29 +28,27 @@
               <v-btn value="recent"  class="px-5 hover:text-pink-500">
                   <span class="mdi mdi mdi-bell text-h6"></span>
                   <span>Notification</span>
-              </v-btn>
+              </v-btn> -->
             </div>
-            <div class=" hidden  lg:block">
-              <!-- <v-btn @click="language=!language">Tamil</v-btn> -->
+            <div  @click="signOut" class=" bg-pink mx-2  rounded hidden lg:block">
+            <v-btn>Logout</v-btn>
+            </div>
+            <!-- <div class=" hidden  lg:block">
               <div class="flex">
                 <div>
                   <v-img src="https://static.vecteezy.com/system/resources/previews/016/774/644/non_2x/3d-user-icon-on-transparent-background-free-png.png" class="w-10"></v-img> 
                 </div>
                 <div>
-                <v-btn><span @click="signOut" class="mdi mdi-chevron-down"></span></v-btn>
+                <v-btn @click="signOut"><span  class="mdi mdi-chevron-down"></span></v-btn>
                 </div>
-            </div>
-
-            <!-- signOut -->
-            </div>
+              </div>
+            </div> -->
          
             </v-app-bar>
     <v-navigation-drawer v-model="draw" >
       <v-divider></v-divider>
-      <v-list-item link to="/"></v-list-item>
-      <v-list-item link to="/Details" title="DetailsPage"></v-list-item>
-      <v-list-item link to="/Profile" title="Profile"></v-list-item>
-      <v-list-item link title="product"></v-list-item>
+      <v-list-item link to="/Profile" title="Add Profile"></v-list-item>
+      <v-list-item @click="signOut">Logout</v-list-item>
     </v-navigation-drawer>
     <v-main>
       <router-view/>

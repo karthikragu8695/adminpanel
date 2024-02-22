@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DetailsPage from '../components/DetailsPage.vue'
 import ProfilePage from '../components/ProfilePage.vue'
 
 
@@ -10,10 +9,10 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/Details',
-    component: DetailsPage
-  },
+  // {
+  //   path: '/Details',
+  //   component: DetailsPage
+  // },
   {
     path: '/Profile',
     component: ProfilePage

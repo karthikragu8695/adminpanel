@@ -67,9 +67,6 @@ const email = ref('')
 const password = ref('')
 const dialog = ref(false)
 const loading = ref(false)
-
-
-
           
 const form2 = async () => {
   try {
@@ -78,14 +75,13 @@ const form2 = async () => {
       email: email.value,
       password: password.value
     })
-    // let { data: admin, error } = await supabase
-    // .from('admin')
-    // .select('*')
-    // .eq('uuid',)
-    // console.log(admin)
-    // console.log(error);
     if (data)  {
       console.log(data);
+      await supabase
+      .from('admin')
+      .insert([
+        { uuid: data.user.id},
+      ])
       }else{
       loading.value=false
       console.log(error)
@@ -120,5 +116,4 @@ onMounted(async() => {
   console.log(Admin);
   console.log(error);
 })
-
 </script>
