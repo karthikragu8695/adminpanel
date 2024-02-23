@@ -9,6 +9,11 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+  {
+    path: '/profiles/:id',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProfileView.vue')
+
+  },
   // {
   //   path: '/Details',
   //   component: DetailsPage

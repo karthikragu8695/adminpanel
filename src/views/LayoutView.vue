@@ -9,11 +9,11 @@
                   <v-icon >mdi-home</v-icon>
                   <span to="/"> Home</span>
               </v-btn> -->
-              <!-- <v-btn value="recent" to="/"  class=" text-pink active px-5 hover:text-pink-500">
+              <!-- <v-btn value="recent" to="/profile"  class=" text-pink active px-5 hover:text-pink-500">
                   <v-icon>mdi-home</v-icon>
-                  <span to="/">Home</span>
-              </v-btn>
-              <v-btn value="recent"  to="/profile" class="px-5 hover:text-pink-500">
+                  <span to="/profile">Home</span>
+              </v-btn> -->
+              <!-- <v-btn value="recent"  to="/profile" class="px-5 hover:text-pink-500">
                   <v-icon>mdi-account</v-icon>
                   <span >Add Profile</span>
               </v-btn>
@@ -62,7 +62,6 @@ import { supabase } from '../supabase'
 const draw = ref (false)
 const signOut = async () => {
     await supabase.auth.signOut()
-    this
 }
 
 </script>

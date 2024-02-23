@@ -1,4 +1,5 @@
 <template>
+  <!-- <DetailsPage ref="detailsPage"></DetailsPage> -->
     <div class="mx-10 my-10">
         <v-btn @click="dialoges">Add Profile</v-btn> 
         <v-card class="mt-10">
@@ -18,13 +19,17 @@
               </v-icon>
               <v-icon
                 size="small"
-                class="text-red"
+                class="me-2 text-red"
                 @click="deleteItem(item)">
                 mdi-delete
               </v-icon>
+              <v-icon
+                size="small"
+                @click="router">
+                 mdi-open-in-new
+              </v-icon>
             </template>
         </v-data-table>
-        
         </v-card>
             <v-dialog v-model="dialog"  fullscreen :scrim="false" transition="slide-x-reverse-transition">
                 <v-list>
@@ -177,26 +182,15 @@
             </v-form>
                 </v-list>
             </v-dialog>
-            <!-- <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue-darken-1" variant="text" >Cancel</v-btn>
-              <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm()">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog> -->
-
-            
     </div>
 </template>
   <script setup>
   import { ref,onMounted } from 'vue'
   import { supabase } from '../supabase'
   const dialog =ref(false)
-  // const dialogDelete =ref(false)
+
+
+  // const detailsPage =ref(null)
   const update = ref(false)
   const loading = ref(false)
   const name = ref('')
@@ -263,7 +257,6 @@
   }
    async function updateItems(){
     dialog.value=false
-    
     const { data } = await supabase
       .from('profiles')
       .update(
@@ -290,7 +283,6 @@
           MotherOccupation:MotherOccupation.value,
           FamilyGod:FamilyGod.value ,
           gender:gender.value,
-          
          })
       .eq('id', id.value)
       .select()
@@ -299,7 +291,6 @@
     async function deleteItem (item) {
     // dialogDelete.value = true
     console.log(item);
-    
     const { error } = await supabase
       .from('profiles')
       .delete()
@@ -307,17 +298,7 @@
       .eq('id', item.id)
       id.value = item.id
       console.log(error)
-          
-
   }
-  // async function deleteItemConfirm(){
-  // const { error } = await supabase
-  //   .from('profiles')
-  //   .delete()
-  //   .eq('id')
-  //   console.log(error);
-    
-  // }
   async function editItem (item) {
     update.value = true
     const { data } = await supabase
