@@ -1,21 +1,6 @@
-<!-- <template>
-    <DetailsPage />
-  </template>
-  
-  <script>
-  import { defineComponent } from 'vue';
-  
-import DetailsPage from '@/components/DetailsPage.vue';
-  export default defineComponent({
-    name: 'DetailView',
-    components: {
-    DetailsPage
-},
-});
-  </script> -->
   <template>
     <div class="px-10">
-     <NuxtLink><span  class="text-h5 lg:ml-20">All Matches</span></NuxtLink>   
+     <a><span  class="text-h5 lg:ml-20">All Matches</span></a>   
       <div v-if="profile">
       <v-row dense>
         <v-col>
@@ -202,7 +187,6 @@ let { data: profiles, error } = await supabase
 .select('*')
 .eq('id', id)
 profile.value = profiles[0]
-console.log(profile.value.age)
 console.log(error)
 })
 

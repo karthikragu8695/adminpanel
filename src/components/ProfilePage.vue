@@ -1,8 +1,8 @@
 <template>
   <!-- <DetailsPage ref="detailsPage"></DetailsPage> -->
     <div class="mx-10 my-10">
-        <v-btn @click="dialoges">Add Profile</v-btn> 
-        <v-card class="mt-10">
+        <v-btn @click="dialoges" v-if="profiles">Add Profile</v-btn> 
+        <v-card  class="mt-10">
         <v-data-table
           :headers="headers"
           :items="items"
@@ -23,9 +23,9 @@
                 @click="deleteItem(item)">
                 mdi-delete
               </v-icon>
-              <v-icon
+                <v-icon
                 size="small"
-                @click="router">
+                @click="direct()">
                  mdi-open-in-new
               </v-icon>
             </template>
@@ -187,9 +187,9 @@
   <script setup>
   import { ref,onMounted } from 'vue'
   import { supabase } from '../supabase'
+  import { useRouter } from 'vue-router'
+
   const dialog =ref(false)
-
-
   // const detailsPage =ref(null)
   const update = ref(false)
   const loading = ref(false)
@@ -222,7 +222,21 @@
   const Month = ref(null)
   const year = ref(null)
   const id = ref (null)
-
+  //  const profile= ref(null)
+const router = useRouter()
+// const route = useRouter()
+async function direct(){
+  // let id = route.params.item.id
+  // let { data: profiles, error } = await supabase
+  //   .from('profiles')
+  //   .select('*')
+  //   .eq('id',item.id)
+  //   profile.value = profiles[0]
+  //   console.log(id)
+  //   console.log(profile)
+  //   console.log(error)
+    router.push({ path: '/profiles/157' })
+}
   function dialoges(){
     dialog.value=true
     update.value=false
